@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if view.object %}Edit post · MyBlog{% else %}Create post · MyBlog{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1 class="page-title">
+        {% if view.object %}Edit post{% else %}Create post{% endif %}
+    </h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <p class="muted" style="margin-top:0.15rem;">{{ field.help_text }}</p>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p style="color:#dc2626; font-size:0.8rem; margin:0.15rem 0;">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn">
+                {% if view.object %}Save changes{% else %}Create{% endif %}
+            </button>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline" style="margin-left:0.5rem;">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

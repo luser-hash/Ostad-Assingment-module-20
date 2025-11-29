@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}MyBlog{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --bg-card: #ffffff;
+            --border: #e2e2e8;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --accent: #2563eb;
+            --accent-soft: #dbeafe;
+            --danger: #dc2626;
+            --radius-lg: 12px;
+            --radius-sm: 6px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .layout {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .btn,
+        .btn-outline,
+        .btn-danger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.35rem 0.8rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            border: 1px solid transparent;
+            cursor: pointer;
+            background: none;
+            font-family: inherit;
+        }
+
+        .btn {
+            background-color: var(--accent);
+            color: #ffffff;
+            border-color: var(--accent);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent);
+            border-color: var(--accent-soft);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: #ffffff;
+            border-color: var(--danger);
+        }
+
+        .btn-link-reset {
+            border: none;
+            background: none;
+            padding: 0;
+            margin: 0;
+            font: inherit;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .btn:hover,
+        .btn-outline:hover,
+        .btn-danger:hover {
+            opacity: 0.9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 960px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+
+        .layout-main {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+        }
+
+        .content {
+            flex: 2;
+        }
+
+        .sidebar {
+            flex: 1;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-header {
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .card-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 0.15rem 0.45rem;
+            font-size: 0.75rem;
+            border-radius: 999px;
+            background-color: var(--accent-soft);
+            color: var(--accent);
+            margin-right: 0.25rem;
+        }
+
+        .muted {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        .page-title {
+            font-size: 1.6rem;
+            margin-bottom: 0.75rem;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.45rem 0.6rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .form-actions {
+            margin-top: 0.75rem;
+        }
+
+        .search-bar {
+            margin-bottom: 1rem;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 0.75rem 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background-color: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .layout-main {
+                flex-direction: column;
+            }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+<div class="layout">
+    <header class="navbar">
+        <div class="navbar-brand">
+            <a href="{% url 'post_list' %}">InkSpace</a>
+        </div>
+        <nav class="navbar-links">
+            <a href="{% url 'post_list' %}">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-outline">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block body %}
+        <div class="layout-main">
+            <section class="content">
+                {% block content %}{% endblock %}
+            </section>
+            <aside class="sidebar">
+                {% block sidebar %}{% endblock %}
+            </aside>
+        </div>
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        © {% now "Y" %} InkSpace · Built by
+        <a href="https://github.com/luser-hash/" target="_blank" rel="noopener noreferrer">Md. Amiluzzaman Nafis</a>
+        · Made with Django with ❤️
+    </footer>
+</div>
+</body>
+</html>

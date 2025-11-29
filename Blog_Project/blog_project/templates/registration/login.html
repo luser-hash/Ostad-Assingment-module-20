@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Login · InkSpace{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1 class="page-title">Login</h1>
+    <p class="muted">Welcome. Please sign in to continue.</p>
+
+    <form method="post" style="margin-top:0.75rem;">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <p class="muted" style="margin-top:0.15rem;">{{ field.help_text }}</p>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p style="color:#dc2626; font-size:0.8rem; margin:0.15rem 0;">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn">Login</button>
+            <a href="{% url 'signup' %}" class="btn btn-outline" style="margin-left:0.5rem;">
+                Register
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Tag: {{ tag }} · MyBlog{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Posts tagged “{{ tag }}”</h1>
+
+{% for post in posts %}
+    <article class="card">
+        <div class="card-header">
+            <h2 class="card-title">
+                <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+            </h2>
+            <p class="card-meta">
+                By {{ post.author }} · {{ post.created_at|date:"M j, Y" }}
+            </p>
+        </div>
+        <p class="muted">
+            {{ post.content|truncatewords:35 }}
+        </p>
+    </article>
+{% empty %}
+    <div class="card">
+        <p class="muted">No posts found for this tag.</p>
+    </div>
+{% endfor %}
+
+<div class="pagination">
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">← Previous</a>
+        {% endif %}
+        <span class="muted">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next →</a>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

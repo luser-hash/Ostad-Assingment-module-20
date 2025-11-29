@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Delete post · MyBlog{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1 class="page-title">Delete post</h1>
+    <p>Are you sure you want to delete <strong>"{{ object.title }}"</strong>?</p>
+
+    <form method="post" style="margin-top:0.75rem;">
+        {% csrf_token %}
+        <button type="submit" class="btn-danger">Confirm delete</button>
+        <a href="{% url 'dashboard' %}" class="btn-outline" style="margin-left:0.5rem;">Cancel</a>
+    </form>
+</div>
+{% endblock %}
