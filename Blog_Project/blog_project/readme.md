@@ -39,8 +39,7 @@ django-taggit
 
 Setup
 -----------
-git clone https://github.com/yourusername/inkspace.git
-cd inkspace
+git clone https://github.com/luser-hash/Ostad-Assingment-module-20.git
 
 python -m venv venv
 source venv/bin/activate        # macOS/Linux
